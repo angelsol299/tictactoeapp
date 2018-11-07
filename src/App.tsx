@@ -11,6 +11,7 @@ const enum Player {
 
 interface IState {
   board: Player[];
+  nextPlayerTurn: Player;
 }
 
 class App extends React.Component<{}, IState> {
@@ -25,11 +26,25 @@ class App extends React.Component<{}, IState> {
       Player.None,
       Player.None,
       Player.None
-    ]
+    ],
+    nextPlayerTurn: Player.One
+  };
+
+  public createOnClickHandler = (index: number) => () => {
+    const { board, nextPlayerTurn } = this.state;
+    const newBoard = board.slice();
+    newBoard[index] = nextPlayerTurn;
+
+    this.setState({
+      board: newBoard,
+      nextPlayerTurn: 3 - nextPlayerTurn
+    });
   };
 
   public renderCell = (index: number) => {
-    return <div className="cell" />;
+    return (
+      <div className="cell" onClick={() => this.createOnClickHandler(index)} />
+    );
   };
 
   public renderBoard = () => {
