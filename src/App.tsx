@@ -86,22 +86,44 @@ class App extends React.Component<{}, IState> {
     ) {
       return board[2];
     }
-    return -1;
+
+    for (const player of board) {
+      if (player === Player.None) {
+        return ONGOING_GAME;
+      }
+    }
+
+    /*
+    for(let i = 0; i < board.length; i++){
+      if (board[i] === Player.None) {
+        return ONGOING_GAME;
+      }
+      return;
+    }
+    
+    board.forEach(player => {
+      if (player === Player.None) {
+        return ONGOING_GAME;
+      }
+      return;
+    });*/
+
+    return Player.None;
   };
 
   public createOnClickHandler = (index: number) => () => {
-    const { board, nextPlayerTurn } = this.state;
+    const { board, nextPlayerTurn, gameIsWon } = this.state;
 
-    if (board[index] !== Player.None) {
+    if (gameIsWon !== ONGOING_GAME && board[index] !== Player.None) {
       return;
     }
     const newBoard = board.slice();
     newBoard[index] = nextPlayerTurn;
-    const gameIsWon = this.checkIfGameIsOver(newBoard);
+    const newGameIsWon = this.checkIfGameIsOver(newBoard);
 
     this.setState({
       board: newBoard,
-      gameIsWon,
+      gameIsWon: newGameIsWon,
       nextPlayerTurn: 3 - nextPlayerTurn
     });
   };
