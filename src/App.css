@@ -37,6 +37,7 @@
   height: 150px;
   margin: auto;
   margin-top: 75px;
+  border: 1px solid black;
 }
 
 .cell {
@@ -44,7 +45,12 @@
   height: 50px;
   display: inline-block;
   font-size: 0;
-  background-color: blue;
+  background-color: #e2e2ff;
   border: 1px solid black;
   box-sizing: border-box;
+}
+
+.cell:hover {
+  cursor: pointer;
+  background: yellow;
 }
